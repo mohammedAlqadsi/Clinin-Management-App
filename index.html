@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> مركز د/ جميل الخالدي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="login-page">
+        <div class="login-container">
+            <span class="login-icon"></span>
+            <form id="login-form">
+                <label for="username">مركز د/ جميل الخالدي :</label>
+                <input type="text" id="username" placeholder="ادخل اسم المستخدم" required><br>
+
+                <label for="password">كلمة المرور:</label>
+                <input type="password" id="password" placeholder="ادخل كلمة المرور" required><br>
+
+                <button type="submit">دخول النظام</button>
+                <p id="login-error" class="error-message" style="display:none;"></p>
+            </form>
+        </div>
+    </div>
+    <div id="main-system" style="display:none;">
+        <header>
+            <h1>مركز د/ جميل الخالدي</h1>
+            <nav>
+                <div class="settings-dropdown">
+                    <button class="settings-btn" onclick="toggleDropdown()">
+                        <span class="settings-icon"></span>
+                    </button>
+                    <div id="settings-menu" class="dropdown-content">
+                        <a href="#" onclick="showSection('archive-review'); toggleDropdown();"><b>مراجعة الأرشيف</b></a>
+                        <a href="#" onclick="showSection('lab-management'); toggleDropdown()"><b>إدارة فحوصات
+                                المختبر</b></a>
+                        <a href="#" onclick="openModal('price-edit-modal'); toggleDropdown()"><b>تعديل أسعار
+                                الخدمات</b></a>
+                        <a href="#" onclick="openModal('password-modal'); toggleDropdown()"><b>تغيير كلمة المرور</b></a>
+                        <a href="#" onclick="logout()"><b>تسجيل الخروج</b></a>
+                    </div>
+                </div>
+                <button onclick="showSection('registration')"><b>تسجيل مريض جديد</b></button>
+                <button onclick="showSection('patient-list')"><b>قائمة المرضى</b></button>
+                <button onclick="showSection('billing')"><b>الفواتير</b></button>
+                <button onclick="showSection('daily-report')"><b>التقرير اليومي</b></button>
+                <button onclick="showSection('expenses-management')"><b>إدارة المصروفات</b> </button>
+
+                <button onclick="archiveAndClearPatients()"><b>أرشفة وحذف مرضى اليوم</b></button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="registration" class="active">
+                <h2>تسجيل مريض جديد</h2>
+                <form id="patient-form">
+                    <label for="p-name">الاسم:</label>
+                    <input type="text" id="p-name" required><br>
+
+                    <label for="p-age">العمر:</label>
+                    <input type="number" id="p-age" required><br>
+
+                    <label for="p-contact">رقم التواصل:</label>
+                    <input type="text" id="p-contact"><br>
+
+                    <button type="submit">تسجيل</button>
+                </form>
+            </section>
+
+            <section id="patient-list" style="display:none;">
+                <h2>قائمة المرضى والخدمات</h2>
+                <table id="patients-table">
+                    <thead>
+                        <tr>
+                            <th>الرقم</th>
+                            <th>الاسم</th>
+                            <th>العمر</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="billing" style="display:none;">
+                <h2> سداد الفاتورة</h2>
+                <select id="invoice-patient-select" style="font-size: 1.2em;">
+                    <option value="">إختر المريض</option>
+                </select>
+                <div id="invoice-details" style="font-size: 1em;">
+
+                </div>
+            </section>
+
+            <section id="lab-management" style="display:none;">
+                <h2>إدارة أسعار فحوصات المختبرات</h2>
+                <button onclick="openLabModal('add')"><b>إضافة فحص جديد</b></button>
+
+                <table id="lab-tests-table">
+                    <thead>
+                        <tr>
+                            <th>اسم الفحص</th>
+                            <th>السعر (ريال)</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </section>
+            <section id="daily-report" style="display: none;">
+                <h2>📊 التقرير المالي والتشغيلي لليوم: <span id="report-date"></span></h2>
+                <hr>
+
+                <h3>ملخص الإيرادات اليومية</h3>
+                <div class="table-container">
+                    <table id="revenue-summary-table">
+                        <thead>
+                            <tr>
+                                <th>الخدمة/القسم</th>
+                                <th>عدد المرات</th>
+                                <th>إجمالي المبلغ للخدمة (ريال)</th>
+                                <th>سعر الوحدة</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" style="text-align: right; font-weight: bold;">الإجمالي الكلي للإيرادات:
+                                </td>
+                                <td id="total-daily-revenue" style="font-weight: bold; color: green;">0.00 ريال</td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <h3 style="margin-top: 30px;">ملخص إيرادات المختبر والفحوصات</h3>
+                <div class="table-container">
+                    <table id="lab-revenue-summary-table">
+                        <thead>
+                            <tr>
+                                <th>اسم الفحص/الخدمة</th>
+                                <th>عدد المرات</th>
+                                <th>إجمالي المبلغ للفحص (ريال)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2" style="text-align: right; font-weight: bold;">الإجمالي الكلي لإيرادات
+                                    المختبر:</td>
+                                <td id="total-daily-lab-revenue" style="font-weight: bold; color: blue;">0.00 ريال</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9;">
+                    <h4>تقسيم إيرادات المختبر</h4>
+                    <p><strong>الإجمالي الكلي للمختبر:</strong> <span id="lab-revenue-for-split"
+                            style="font-weight: bold; color: blue;">0.00 ريال</span></p>
+                    <p><strong>حصة العيادة:</strong> <span id="clinic-share"
+                            style="font-weight: bold; color: green;">0.00 ريال</span></p>
+                    <p><strong>المبلغ المستحق لصاحب المختبر:</strong> <span id="lab-owner-share"
+                            style="font-weight: bold; color: darkred;">0.00 ريال</span></p>
+                    <p style="font-size: 0.9em; color: #666;">نسبة التقسيم الحالية : (30% للعيادة / 70% للمختبر).</p>
+
+                    <h3 style="margin-top: 30px;">ملخص المصروفات اليومية</h3>
+                    <div class="table-container">
+                        <table id="expense-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>المستلم/الوصف</th>
+                                    <th>عدد السحوبات</th>
+                                    <th>إجمالي المبلغ للمستلم (ريال)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="text-align: right; font-weight: bold;">الإجمالي الكلي
+                                        للمصروفات:</td>
+                                    <td id="total-daily-expense" style="font-weight: bold; color: red;">0.00 ريال</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <h3 style="margin-top: 30px;">ملخص الأداء العام</h3>
+                    <div style="font-size: 1.1em; line-height: 2;">
+                        <p><strong>عدد المرضى المسجلين اليوم:</strong> <span id="report-patient-count">0</span> مريض</p>
+                        <p><strong>صافي الربح لهذا اليوم (الإيرادات - المصروفات):</strong> <span id="report-net-profit"
+                                style="font-weight: bold;">0.00 ريال</span></p>
+                    </div>
+            </section>
+            <section id="expenses-management" style="display: none;">
+                <h2>إدارة المصروفات الشهرية</h2>
+                <button class="action-btn" onclick="openModal('add-expense-modal')"><b>إضافة مصروفات جديدة</b></button>
+
+                <h3>ملخص المصروفات حسب المستلم</h3>
+                <div class="table-container">
+                    <table id="expenses-table">
+                        <thead>
+                            <tr>
+                                <th>اسم المستلم</th>
+                                <th>الإجمالي المستحق عليه (ريال)</th>
+                                <th>عدد السحوبات</th>
+                                <th>إجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 20px; font-size: 1.2em;">
+                    <strong>الإجمالي الكلي للمصروفات:</strong> <span id="total-expenses" style="color: red;">0.00
+                        ريال</span>
+                </div>
+
+                <div id="expenses-details-display">
+                </div>
+            </section>
+
+            <div id="add-expense-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal('add-expense-modal')">&times;</span>
+                    <h3>تسجيل خرجيات جديدة</h3>
+                    <form id="expense-form">
+                        <input type="hidden" id="expense-id">
+
+                        <label for="expense-amount">المبلغ (ريال):</label>
+                        <input type="number" id="expense-amount" step="0.01" min="0" required>
+
+                        <label for="expense-recipient">مستلم المبلغ :</label>
+                        <input type="text" id="expense-recipient" required>
+
+                        <label for="expense-date">تاريخ السحب:</label>
+                        <input type="date" id="expense-date" required>
+
+                        <label for="expense-notes">ملاحظات (اختياري):</label>
+                        <input type="text" id="expense-notes">
+
+                        <button type="submit">حفظ</button>
+                    </form>
+                </div>
+            </div>
+
+            <section id="archive-review" style="display:none;">
+                <h2>أرشيف العمليات والمراجعة الشهرية</h2>
+                <p>هنا يمكنك مراجعة بيانات جميع المرضى والخدمات المسجلة في الأيام السابقة.</p>
+
+                <div class="archive-summary">
+                    <h4>ملخص الأرشيف:</h4>
+                    <p id="archive-total-days">عدد الأيام المؤرشفة: 0</p>
+                    <p id="archive-total-patients">إجمالي عدد المرضى المؤرشفين: 0</p>
+                    <p id="archive-total-revenue">إجمالي الإيرادات المؤرشفة: 0.00 ريال</p>
+                </div>
+
+                <hr>
+
+                <button onclick="clearAllArchiveData()" class="delete-btn" style="background-color: #d32f2f;">حذف كل
+                    بيانات الأرشيف</button>
+
+                <h3 style="margin-top: 20px;">سجلات الأيام المؤرشفة:</h3>
+
+                <select id="archive-day-select" onchange="displayArchiveDayDetails()" style="font-size: 1em;">
+                    <option value="">اختر يوم للمراجعة</option>
+                </select>
+
+                <div id="archive-details-display" style="margin-top: 15px;">
+                </div>
+
+            </section>
+
+            <div id="service-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('service-modal')">&times;</span>
+                    <h2>إضافة خدمة للمريض: <span id="modal-patient-name"></span></h2>
+                    <input type="hidden" id="modal-patient-id">
+
+                    <form id="service-form">
+                        <label for="service-type">اختر نوع الخدمة:</label>
+                        <select id="service-type" required onchange="toggleServiceInputs()">
+                            <option value="">اختر الخدمة</option>
+                            <option value="examination">معاينة</option>
+                            <option value="nursing">تمريض</option>
+
+                            <option value="laboratory">مختبر</option>
+
+                            <option value="other">أخرى</option>
+                        </select><br>
+
+                        <div id="lab-inputs" style="display:none;">
+                            <label for="lab-test-select">نوع الفحص:</label>
+                            <select id="lab-test-select"></select>
+                        </div>
+
+                        <div id="custom-inputs" style="display:none;">
+                            <label for="custom-name">اسم الخدمة :</label>
+                            <input type="text" id="custom-name">
+
+                            <label for="custom-price">سعر الخدمة (ريال):</label>
+                            <input type="number" id="custom-price" min="1" step="0.01">
+                        </div>
+
+                        <label for="service-notes">ملاحظات (اختياري):</label>
+                        <textarea id="service-notes"></textarea><br>
+
+                        <button type="submit">إضافة الخدمة</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="password-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal('password-modal')">&times;</span>
+                    <h3>تغيير كلمة المرور</h3>
+                    <form id="password-change-form">
+
+                        <h4 style="color: #00796b;">لتغيير كلمة المرور، أدخل إحدى المعلومتين:</h4>
+
+                        <label for="old-password">كلمة المرور الحالية:</label>
+                        <input type="password" id="old-password"><br>
+
+                        <h4 style="text-align: center; margin: 10px 0; color: #888;">أو</h4>
+
+                        <label for="mobile-recovery">رقم الجوال السري للاستعادة:</label>
+                        <input type="text" id="mobile-recovery"><br>
+
+                        <hr>
+                        <label for="new-password">كلمة المرور الجديدة:</label>
+                        <input type="password" id="new-password" required><br>
+
+                        <button type="submit">حفظ كلمة المرور الجديدة</button>
+                        <p id="change-error" class="error-message" style="display:none;"></p>
+
+                        <p style="font-size: 0.8em; color: #999; margin-top: 15px;">*رقم الجوال السري الافتراضي هو:
+                            <span style="font-weight: bold;">0501234567</span></p>
+                    </form>
+                </div>
+            </div>
+
+            <div id="lab-edit-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal('lab-edit-modal')">&times;</span>
+                    <h3 id="lab-modal-title">إضافة فحص مختبر</h3>
+                    <form id="lab-form">
+                        <input type="hidden" id="lab-id">
+
+                        <label for="modal-lab-name">اسم الفحص:</label>
+                        <input type="text" id="modal-lab-name" required><br>
+
+                        <label for="modal-lab-price">السعر (ريال):</label>
+                        <input type="number" id="modal-lab-price" required min="1" step="0.01"><br>
+
+                        <button type="submit">حفظ الفحص</button>
+                    </form>
+                </div>
+            </div>
+            <div id="price-edit-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" onclick="closeModal('price-edit-modal')">&times;</span>
+                    <h3>تعديل أسعار الخدمات الثابتة</h3>
+                    <form id="price-edit-form">
+
+                        <label for="examination-price">سعر المعاينة (ريال):</label>
+                        <input type="number" id="examination-price" required min="1" step="0.01"><br>
+
+                        <label for="nursing-price">سعر التمريض (ريال):</label>
+                        <input type="number" id="nursing-price" required min="1" step="0.01"><br>
+
+                        <button type="submit">حفظ الأسعار الجديدة</button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+
+        <footer>
+            <p>&copy; 2025 نظام مركز د/ جميل الخالدي. تصميم بواسطة م/ محمد جميل</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

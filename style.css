@@ -1,0 +1,487 @@
+/* ==================================================== */
+/* التنسيقات الأساسية */
+/* ==================================================== */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    direction: rtl;
+    /* دعم اللغة العربية */
+    text-align: right;
+}
+
+header {
+    background-color: #004d40;
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    background-image: url('images/3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav button {
+    background-color: #0d2121;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 10px 15px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav button:hover {
+    background-color: #51c7cb;
+}
+
+/* تنسيقات الإعدادات والقائمة المنسدلة */
+.settings-dropdown {
+    position: relative;
+    float: left;
+    margin-left: 10px;
+}
+
+.settings-btn {
+    background: none !important;
+    border: none !important;
+    padding: 10px;
+    margin: 0 !important;
+    cursor: pointer;
+}
+
+.settings-icon {
+    background-image: url('images/6.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    /* لتثبيت القائمة على اليسار */
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 15;
+    /* تأكد أنها فوق كل شيء */
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: right;
+}
+
+.dropdown-content.show {
+    display: block;
+    /* **عندما يضيفها JavaScript، ستظهر** */
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.1s;
+}
+
+.dropdown-content a:hover {
+    background-color: #e0f2f1;
+    color: #004d40;
+}
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+
+}
+
+section h2 {
+    color: #00796b;
+    border-bottom: 2px solid #e0f2f1;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+/* ==================================================== */
+/* تنسيقات النماذج والحقول */
+/* ==================================================== */
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="password"],
+form select,
+form textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+form button {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #005a4e;
+}
+
+.error-message {
+    color: #d32f2f;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* ==================================================== */
+/* تنسيقات الجداول */
+/* ==================================================== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: right;
+}
+
+th {
+    background-color: #e0f2f1;
+    color: #004d40;
+    font-weight: bold;
+}
+
+/* ==================================================== */
+/* تنسيقات الأزرار والإجراءات */
+/* ==================================================== */
+
+.action-btn {
+    background-color: #00796b;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+.action-btn:hover {
+    background-color: #005a4e;
+}
+
+.print-btn {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.print-btn:hover {
+    background-color: #777;
+}
+
+/* أزرار إدارة المختبرات */
+.edit-btn {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+/* ==================================================== */
+/* تنسيقات النوافذ المنبثقة (Modal) */
+/* ==================================================== */
+
+/* تنسيقات النوافذ المنبثقة */
+.modal {
+    display: none;
+    /* **يجب أن تكون مخفية افتراضياً** */
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* خلفية سوداء شفافة */
+    padding-top: 60px;
+}
+
+/* تنسيقات محتوى النافذة */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    /* 5% من الأعلى وفي المنتصف أفقياً */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    color: #aaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* ==================================================== */
+/* تنسيقات صفحة تسجيل الدخول */
+/* ==================================================== */
+/* ==================================================== */
+/* تنسيقات صفحة تسجيل الدخول */
+/* ==================================================== */
+#login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0f2f1;
+
+
+    background-image: url('images/10.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.7);
+
+}
+
+
+.login-container {
+    .login-icon {
+        background-image: url('images/2.png');
+        background-size: contain;
+        /* لضمان ظهور الأيقونة بالكامل */
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 120px;
+        height: 120px;
+        display: inline-block;
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+
+    background-color: rgba(147, 233, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: center;
+    z-index: 1;
+}
+
+#login-form input[type="text"],
+#login-form input[type="password"] {
+    margin-bottom: 15px;
+}
+
+#login-form button {
+    background-color: #00796b;
+    padding: 10px;
+    font-size: 1.1em;
+}
+
+/* تنسيقات تغيير كلمة المرور */
+#password-modal h4 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 1.0em;
+}
+
+#password-modal hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), #ccc, rgba(0, 0, 0, 0));
+    margin: 20px 0;
+}
+
+/* ==================================================== */
+/* تنسيقات قسم الأرشيف (الجديد) */
+/* ==================================================== */
+
+.archive-summary {
+    background-color: #e0f2f1;
+    border: 1px solid #b2dfdb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.archive-summary h4 {
+    color: #004d40;
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #b2dfdb;
+    padding-bottom: 5px;
+}
+
+#archive-review select {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* تنسيق لعرض تفاصيل اليوم المؤرشف */
+#archive-details-display table {
+    font-size: 0.9em;
+}
+
+
+/* ==================================================== */
+/* تنسيقات التذييل (Footer) */
+/* ==================================================== */
+footer {
+    text-align: center;
+    padding: 10px 0;
+    background-color: #004d40;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9em;
+}
+
+
+/* ==================================== */
+/* قسم خاص بتنسيقات الطباعة (Print Styles) */
+/* ==================================== */
+
+/* ================================================= */
+/* قسم الطباعة: لفرض الطباعة على صورة خلفية مخصصة */
+/* ================================================= */
+
+@media print {
+
+    /* 1. إخفاء كل محتوى الصفحة ما عدا الفاتورة */
+    body * {
+        visibility: hidden;
+    }
+
+    /* 2. جعل الفاتورة نفسها وعناصرها الداخلية مرئية */
+    #invoice-details,
+    #invoice-details * {
+        visibility: visible;
+    }
+
+    /* 3. تطبيق صورة الخلفية على جسم الصفحة المطبوع (القالب) */
+    body {
+        /* **المسار الافتراضي للصورة** */
+        background-image: url('images/7.png');
+
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #fff;
+        /* خلفية بيضاء احتياطية */
+
+        /* الخاصية الحاسمة: إجبار المتصفح على طباعة الرسومات والألوان */
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* 4. وضع محتوى الفاتورة (النص والجداول) في أعلى الصفحة */
+    #invoice-details {
+        position: absolute;
+        /* وضع مطلق */
+        left: 0;
+        top: 250px;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        /* يمكن تعديل هذه المساحة حسب تصميم القالب (الصورة) */
+
+        /* ضمان أن محتوى الفاتورة يظهر فوق الخلفية */
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+
+    /* 5. إزالة أي خلفيات بيضاء من الجداول داخل الفاتورة */
+    #invoice-details table,
+    #invoice-details table th,
+    #invoice-details table td {
+        background-color: transparent !important;
+        border-color: #000 !important;
+        color: #000 !important;
+    }
+
+    /* إخفاء الأزرار نهائياً */
+    #invoice-details button {
+        display: none !important;
+    }
+}
